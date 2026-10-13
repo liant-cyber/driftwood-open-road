@@ -1,4 +1,4 @@
-const CACHE='driftwood-v8';
+const CACHE='driftwood-v9';
 const THREE_MODULE='https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js';
 const FILES=['./','./index.html','./style.css','./game.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES).then(()=>cache.add(THREE_MODULE).catch(()=>undefined))).then(()=>self.skipWaiting())));
