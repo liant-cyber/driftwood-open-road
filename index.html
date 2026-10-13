@@ -8,7 +8,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
   <title>Driftwood — Open Road</title>
 </head>
 <body>
@@ -43,10 +43,11 @@
       <div class="garage-foot"><span>DEIN GUTHABEN</span><b>◆ <span id="garageCoins">0</span></b></div>
     </section>
     <section class="overlay wreck-screen hidden" id="wreckScreen">
-      <div class="wreck-icon">✳</div><div class="eyebrow">DAS WAR EIN HARTER AUFPRALL</div><h2>Pause für den<br><em>Piper.</em></h2>
-      <p>Dein Auto hat den Zusammenstoß nicht überstanden. In der Garage wartet dein nächster Ausflug.</p>
-      <button class="primary-button" id="wreckGarage">ZUR GARAGE <span>↗</span></button>
+      <div class="wreck-icon">✳</div><div class="eyebrow">DAS WAR EIN HARTER AUFPRALL</div><h2>Pause für den<br><em id="wreckCarName">Piper.</em></h2>
+      <p>Das Auto ist zerstört und muss in der Garage erneut gekauft werden. Der Piper ist kostenlos.</p>
+      <div class="wreck-actions"><button class="primary-button" id="wreckGarage">ZUR GARAGE <span>↗</span></button><button class="secondary-button" id="restartBtn">NEUSTART <span>↻</span></button></div>
     </section>
+    <div class="explosion-effect hidden" id="explosionEffect" aria-hidden="true"><div class="blast-ring"></div><div class="blast-core"></div><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="controls hidden" id="controls">
       <div class="steering" id="steering" aria-label="Lenkung"><div class="stick"><span></span></div><small>LENKEN</small></div>
       <div class="pedals"><button class="pedal reverse" id="reverse"><span>▼</span><small>BREMSEN</small></button><button class="pedal accelerate" id="accelerate" aria-pressed="false"><span>▲</span><small id="gasLabel">GAS</small></button></div>
@@ -54,6 +55,6 @@
     <div class="desktop-hint" id="desktopHint">WASD / PFEILE <span>FAHREN</span><kbd>G</kbd> GARAGE</div>
     <div class="minimap-wrap"><canvas id="minimap" width="156" height="112"></canvas><span>CEDAR COVE</span></div>
   </main>
-  <script src="game.js?v=6"></script>
+  <script src="game.js?v=7"></script>
 </body>
 </html>
