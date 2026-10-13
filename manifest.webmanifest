@@ -1,0 +1,12 @@
+{
+  "name": "Driftwood — Open Road Club",
+  "short_name": "Driftwood",
+  "description": "Fahr frei durch Cedar Cove.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#142027",
+  "theme_color": "#111a22",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

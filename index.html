@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#111a22">
+  <meta name="description" content="Cruise durch eine kleine offene Inselwelt, sammle Münzen und tune deine Autos.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+  <title>Driftwood — Open Road</title>
+</head>
+<body>
+  <main id="game" aria-label="Driftwood Fahrspiel">
+    <canvas id="world" aria-label="Spielwelt"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">D</span><div><b>DRIFTWOOD</b><small>OPEN ROAD CLUB</small></div></div>
+      <div class="hud">
+        <div class="hud-pill coins"><span class="coin-icon">◆</span><span id="coinCount">0</span></div>
+        <button class="icon-button" id="garageBtn" aria-label="Garage öffnen">☰</button>
+      </div>
+    </header>
+    <div class="drive-hud hidden" id="driveHud">
+      <div class="car-label"><span class="live-dot"></span><span id="carName">THE PIPER</span><span class="separator">/</span><span id="gear">N</span></div>
+      <div class="condition"><span class="condition-label">ZUSTAND</span><div class="health-track"><i id="healthBar"></i></div><span id="healthText">100%</span></div>
+      <div class="speed"><strong id="speed">00</strong><small>KM/H</small></div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <section class="overlay start-screen" id="startScreen">
+      <div class="eyebrow"><span></span> EIN ORT FÜR DEINE EIGENE ROUTE</div>
+      <h1>Find your<br><em>open road.</em></h1>
+      <p>Eine kleine Insel. Drei Autos. Und kein Grund, schon nach Hause zu fahren.</p>
+      <button class="primary-button" id="startBtn">LOSFAHREN <span>↗</span></button>
+      <div class="start-note">KLEMM DICH HINTERS STEUER · ENTDECKE DIE INSEL</div>
+      <div class="start-car" aria-hidden="true">🏎️</div>
+    </section>
+    <section class="overlay garage-screen hidden" id="garageScreen">
+      <div class="garage-head"><div><div class="eyebrow"><span></span> DEIN FUHRPARK</div><h2>Die Garage<span>.</span></h2></div><button class="close-button" id="closeGarage" aria-label="Schließen">×</button></div>
+      <p class="garage-sub">Such dir deinen Weggefährten aus.</p>
+      <div class="car-list" id="carList"></div>
+      <div class="garage-foot"><span>DEIN GUTHABEN</span><b>◆ <span id="garageCoins">0</span></b></div>
+    </section>
+    <section class="overlay wreck-screen hidden" id="wreckScreen">
+      <div class="wreck-icon">✳</div><div class="eyebrow">DAS WAR EIN HARTER AUFPRALL</div><h2>Pause für den<br><em>Piper.</em></h2>
+      <p>Dein Auto hat den Zusammenstoß nicht überstanden. In der Garage wartet dein nächster Ausflug.</p>
+      <button class="primary-button" id="wreckGarage">ZUR GARAGE <span>↗</span></button>
+    </section>
+    <div class="controls hidden" id="controls">
+      <div class="steering" id="steering" aria-label="Lenkung"><div class="stick"><span></span></div><small>LENKEN</small></div>
+      <div class="pedals"><button class="pedal reverse" id="reverse"><span>▼</span><small>BREMSEN</small></button><button class="pedal accelerate" id="accelerate"><span>▲</span><small>GAS</small></button></div>
+    </div>
+    <div class="desktop-hint" id="desktopHint">WASD / PFEILE <span>FAHREN</span><kbd>G</kbd> GARAGE</div>
+    <div class="minimap-wrap"><canvas id="minimap" width="156" height="112"></canvas><span>CEDAR COVE</span></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
