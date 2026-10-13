@@ -8,7 +8,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <title>Driftwood — Open Road</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
     <canvas id="world" aria-label="Spielwelt"></canvas>
     <div class="vignette"></div>
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">D</span><div><b>DRIFTWOOD</b><small>OPEN ROAD CLUB</small></div></div>
+      <div class="brand"><span class="brand-mark">D</span><div><b>DRIFTWOOD</b><small>OPEN ROAD CLUB <i class="brand-3d">3D</i></small></div></div>
       <div class="hud">
         <div class="hud-pill coins"><span class="coin-icon">◆</span><span id="coinCount">0</span></div>
         <button class="icon-button" id="garageBtn" aria-label="Garage öffnen">☰</button>
@@ -28,6 +28,7 @@
       <div class="speed"><strong id="speed">00</strong><small>KM/H</small></div>
     </div>
     <div class="toast" id="toast"></div>
+    <div class="graphics-error hidden" id="graphicsError">Die 3D-Ansicht konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite neu.</div>
     <section class="overlay start-screen" id="startScreen">
       <div class="eyebrow"><span></span> EIN ORT FÜR DEINE EIGENE ROUTE</div>
       <h1>Find your<br><em>open road.</em></h1>
@@ -55,6 +56,7 @@
     <div class="desktop-hint" id="desktopHint">WASD / PFEILE <span>FAHREN</span><kbd>G</kbd> GARAGE</div>
     <div class="minimap-wrap"><canvas id="minimap" width="156" height="112"></canvas><span>CEDAR COVE</span></div>
   </main>
-  <script src="game.js?v=7"></script>
+  <script>window.addEventListener('error',function(e){if(e.target&&e.target.type==='module'){var box=document.getElementById('graphicsError');if(box)box.classList.remove('hidden')}},true)</script>
+  <script type="module" src="game.js?v=8"></script>
 </body>
 </html>
