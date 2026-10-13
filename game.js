@@ -17,7 +17,9 @@
     ...[[310,240],[420,180],[1310,220],[1450,310],[260,820],[1500,930],[1130,1080],[560,1060],[760,300],[1000,430],[1530,650],[360,570],[1240,760]].map(([x,y],i)=>({x,y,r:i%3===0?35:27,type:'tree',seed:i})),
     ...[[550,410],[680,945],[1130,290],[1340,520],[920,1000],[430,650],[1480,800],[1010,200]].map(([x,y],i)=>({x,y,r:20,type:'rock',seed:i}))
   ];
-  let pickups=Array.from({length:25},(_,i)=>({x:220+(i*317%1370),y:180+(i*197%920),taken:false,bob:i*.8}));
+  let pickups=[];
+  function coinPosition(except=null){for(let tries=0;tries<1200;tries++){const x=150+Math.random()*1460,y=145+Math.random()*980;if(!onIsland(x,y)||Math.hypot(player.x-x,player.y-y)<105)continue;if(obstacles.some(o=>Math.hypot(o.x-x,o.y-y)<o.r+43))continue;if(pickups.some(c=>c!==except&&!c.taken&&Math.hypot(c.x-x,c.y-y)<78))continue;return{x,y}}return null}
+  pickups=Array.from({length:25},(_,i)=>{const p=coinPosition()||{x:845+(i%5)*90,y:690+Math.floor(i/5)*70};return{...p,taken:false,respawnAt:0,bob:i*.8}});
   const hills=[{x:470,y:350,r:230,h:28},{x:1230,y:390,r:210,h:42},{x:760,y:880,r:300,h:34},{x:1330,y:900,r:230,h:23},{x:980,y:220,r:135,h:22}];
   function save(){try{localStorage.setItem('driftwood-save',JSON.stringify({coins,owned,selected}))}catch{/* Private browsing may disable storage; keep the current session playable. */}}
   function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
@@ -53,7 +55,7 @@
   function update(dt,t){if(driving&&!wrecked){const car=cars.find(c=>c.id===selected)||cars[0];if(throttle){speed+=throttle*190*car.power*dt}else speed*=Math.pow(.985,dt*60);speed=Math.max(-75,Math.min(230*car.power,speed));angle+=steer*(.95+Math.min(1,Math.abs(speed)/90)*1.5)*dt*(speed<0?-1:1)*car.grip;const nx=player.x+Math.sin(angle)*speed*dt,ny=player.y-Math.cos(angle)*speed*dt;player.x=Math.max(140,Math.min(1635,nx));player.y=Math.max(145,Math.min(1120,ny));
       if(!onIsland(player.x,player.y)){player.x-=Math.sin(angle)*speed*dt;player.y+=Math.cos(angle)*speed*dt;speed*=.25;toast('DAS UFER HÄLT DICH AUF')}
       for(const o of obstacles){let dx=player.x-o.x,dy=player.y-o.y,d=Math.hypot(dx,dy);if(d<o.r+22){const n=d||1,push=o.r+22-d+1;player.x+=dx/n*push;player.y+=dy/n*push;const impact=Math.abs(speed);if(impact>24){health=Math.max(0,health-(impact-18)*.20);speed*=-.25;toast(impact>75?'HARTER AUFPRALL · KAROSSERIE BESCHÄDIGT':'AUFPRALL · FAHRZEUG BESCHÄDIGT');if(health<=0){health=0;wreck()}}else speed*=.45;break}}
-      for(const c of pickups){if(!c.taken&&Math.hypot(player.x-c.x,player.y-c.y)<31){c.taken=true;coins+=1;save();$('coinCount').textContent=coins;toast('+ 1 MÜNZE EINGESAMMELT')}}
+      for(const c of pickups){if(c.taken&&t>=c.respawnAt){const p=coinPosition(c);if(p){c.x=p.x;c.y=p.y;c.taken=false}}if(!c.taken&&Math.hypot(player.x-c.x,player.y-c.y)<31){c.taken=true;c.respawnAt=t+9000;coins+=1;save();$('coinCount').textContent=coins;toast('+ 1 MÜNZE EINGESAMMELT')}}
     }camera.x+=(player.x-camera.x)*Math.min(1,dt*5);camera.y+=(player.y-camera.y)*Math.min(1,dt*5);$('speed').textContent=String(Math.round(Math.abs(speed)*.63)).padStart(2,'0');$('gear').textContent=speed>2?'D':speed< -2?'R':'N';$('healthText').textContent=Math.round(health)+'%';$('healthBar').style.width=health+'%';$('healthBar').style.background=health<30?'#ed805a':health<60?'#e9bd5e':'#d6f36a';drawWorld(t);requestAnimationFrame(loop)}
   let toastTimer;function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1700)}
   function loop(t){let dt=Math.min(.04,(t-last)/1000||0);last=t;update(dt,t)}requestAnimationFrame(loop);
